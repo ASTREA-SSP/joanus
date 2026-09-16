@@ -132,17 +132,17 @@ class ExoplanetPipeline():
         plt.savefig(path_transit)
         plt.close(fig2)
 
+
     def compute_physics(self):
         print(f"[{self.target_object}] Computing Physical Metrics...")
         min_flux = float(np.min(self.binned_lc.flux.value))
         self.transit_depth = 1.0 - min_flux
         self.transit_depth_in_ppm = self.transit_depth * 1_000_000
 
-        # === CORE METRIC (100% Catalog Independent) ===
-        # δ = (Rp / R*)^2  =>  Rp / R* = sqrt(δ)
+        # Relatives Radienverhältnis (Rp / R*)
         self.radius_ratio = math.sqrt(self.transit_depth)
 
-        # === DERIVED ABSOLUTE METRICS (Depends on R*) ===
+        # Physikalische Radien
         planet_radius_solar = self.sun_radius * self.radius_ratio
         self.planet_radius_to_earth_radii = planet_radius_solar * 109.2
         self.planet_radius_kilometers = 6371 * self.planet_radius_to_earth_radii
@@ -154,6 +154,9 @@ class ExoplanetPipeline():
         print(f"Calculated Planet Radius:   {self.planet_radius_to_earth_radii:.2f} R⊕")
         print(f"Calculated Planet Radius:   {self.planet_radius_kilometers:,.0f} Km\n")
 
+        # Validation Suite direkt nach der Physik-Berechnung ausführen
+        self.validate_signal()
+        
     def validate_signal(self):
         print(f"[{self.target_object}] Running Validation Suite (False Positive Checks)...")
         

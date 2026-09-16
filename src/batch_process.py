@@ -1,7 +1,6 @@
 import traceback
 from pipeline import ExoplanetPipeline
 
-# Liste von Test-Sternen (Gasriesen, kleine Planeten, etc.)
 TARGETS = [
     {"name": "Kepler-10", "quarter": "02"},
     {"name": "Kepler-8",  "quarter": "02"},
@@ -20,22 +19,21 @@ def run_batch():
         print(f"\n>>> PROCESSING: {name} (Quarter {quarter}) <<<")
         
         try:
-            # 1. Pipeline Instanz erstellen
             pipeline = ExoplanetPipeline(target_object=name, quarter=quarter)
             
-            # 2. Complete Workflow ausführen
             pipeline.download_and_clean()
             pipeline.run_bls()
             pipeline.fold_data()
             pipeline.plot_bls()
             pipeline.plot_auto()
-            pipeline.compute_physics()
+            pipeline.compute_physics()  # Beinhaltet nun self.validate_signal()
             pipeline.save_results()
             
-            # 3. Status für Zusammenfassung speichern
+            status_str = "VALID" if pipeline.is_candidate_valid else "FLAGGED"
+            
             summary_results.append({
                 "target": name,
-                "status": "VALID" if pipeline.is_candidate_valid else "FLAGGED",
+                "status": status_str,
                 "period": f"{pipeline.best_period.value:.4f} d",
                 "radius_earth": f"{pipeline.planet_radius_to_earth_radii:.2f} R⊕",
                 "snr": f"{pipeline.snr:.1f}"
@@ -51,7 +49,6 @@ def run_batch():
                 "snr": "N/A"
             })
 
-    # === SUMMARY TABLE ===
     print("\n=================== BATCH EXECUTION SUMMARY ===================")
     print(f"{'Target':<12} | {'Status':<8} | {'SNR':<6} | {'Period':<10} | {'Radius':<10}")
     print("-" * 60)
