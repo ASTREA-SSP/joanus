@@ -2,3 +2,4 @@ astropy
 lightkurve
 numpy
 matplotlib
+astroquery
