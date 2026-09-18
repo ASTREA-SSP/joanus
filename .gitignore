@@ -1,4 +1,3 @@
 .venv/
-data/
 *.fits
 __pycache__/

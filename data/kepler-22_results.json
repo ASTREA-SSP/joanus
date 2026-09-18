@@ -1,0 +1,13 @@
+{
+    "target": "Kepler-22",
+    "quarter": "02",
+    "period_days": 4.885805388875591,
+    "snr": 12.564076277477417,
+    "transit_depth_ppm": 113.71270134785672,
+    "radius_ratio_rp_rs": 0.010663615772703774,
+    "star_radius_solar": 1.0,
+    "is_star_radius_estimated": true,
+    "planet_radius_earth": 1.1644668423792521,
+    "planet_radius_km": 7418.818252798215,
+    "is_valid_candidate": false
+}

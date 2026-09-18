@@ -1,0 +1,13 @@
+{
+    "target": "Kepler-10",
+    "quarter": "02",
+    "period_days": 0.8374944812907819,
+    "snr": 62.007486051573466,
+    "transit_depth_ppm": 199.16333029446065,
+    "radius_ratio_rp_rs": 0.014112523881094432,
+    "star_radius_solar": 1.0,
+    "is_star_radius_estimated": true,
+    "planet_radius_earth": 1.541087607815512,
+    "planet_radius_km": 9818.269149392627,
+    "is_valid_candidate": true
+}
